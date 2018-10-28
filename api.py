@@ -38,8 +38,8 @@ class ItemList(Resource):
 
         logging.info('List items')
 
-        redis = get_redis()
-        items = redis.hvals('cl-tracker.items')
+        r = get_redis()
+        items = r.hvals('cl-tracker.items')
 
         return list(map(json.loads, items))
 
@@ -60,8 +60,8 @@ class ItemList(Resource):
             'expired': False,
         }
 
-        redis = get_redis()
-        redis.hset('cl-tracker.items', item_id, json.dumps(item))
+        r = get_redis()
+        r.hset('cl-tracker.items', item_id, json.dumps(item))
 
         message = json.dumps({"itemId": item_id, 'url': url})
         publish_message('worker', message)
@@ -76,8 +76,8 @@ class Item(Resource):
 
         logging.info('Update item')
 
-        redis = get_redis()
-        item = json.loads(redis.hget('cl-tracker.items', item_id))
+        r = get_redis()
+        item = json.loads(r.hget('cl-tracker.items', item_id))
         url = item['url']
 
         message = json.dumps({"itemId": item_id, 'url': url})
@@ -91,8 +91,8 @@ class Item(Resource):
 
         logging.info('Delete item')
 
-        redis = get_redis()
-        redis.hdel('cl-tracker.items', item_id)
+        r = get_redis()
+        r.hdel('cl-tracker.items', item_id)
 
         return '', 204
 
