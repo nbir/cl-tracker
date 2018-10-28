@@ -17,7 +17,7 @@ def setup_queue():
     """Setup RabbitMQ exchange, worker and wait queues, and bindings
     """
 
-    logging.info("Setting up exchange, queues and bindings")
+    logging.info('Setting up exchange, queues and bindings')
 
     connection = pika.BlockingConnection(pika.URLParameters(AMQP_URL))
     channel = connection.channel()
@@ -45,7 +45,7 @@ def setup_worker():
     """Consumes messages from the worker queue
     """
 
-    logging.info("Consuming messages from queue...")
+    logging.info('Consuming messages from queue...')
 
     connection = pika.BlockingConnection(pika.URLParameters(AMQP_URL))
     channel = connection.channel()
@@ -117,14 +117,12 @@ def update_item(item_id, fields):
     logging.info('Updateing item_id {}'.format(item_id))
 
     r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
-
-    key = 'cl-tracker.{}'.format(item_id)
-    payload = json.loads(r.get(key))
+    payload = json.loads(r.hget('cl-tracker.items', item_id))
 
     payload = {**payload, **fields}
     payload['updatedAt'] = str(datetime.now())
 
-    r.set(key, json.dumps(payload))
+    r.hset('cl-tracker.items', item_id, json.dumps(payload))
 
 
 def queue_next(item_id, url):

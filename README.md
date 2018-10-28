@@ -13,6 +13,7 @@ A Craigslist item/search tracker
 - `rabbitmq-server` - start RabbitMQ server
 - `redis-server` - start redis server
 - `pipenv run python worker.py` - run worker
+- `pipenv run python api.py` - run API
 
 ## Development
 
@@ -20,12 +21,23 @@ A Craigslist item/search tracker
 - `pipenv lock` - lock package versions
 - `pipenv run <file-name>` - run a file in pipenv (or `pipenv shell` to activate a virtualenv)
 - `tail -f cl-tracker.worker.log` - tail worker logs
+- `tail -f cl-tracker.api.log` - tail API logs
 
 ## Components
 
 ### Storage
 
-Information regarding an item is stored in redis using a single key named `cl-tracker.<item_id>`. The value of the key is a JSON of the following format:
+Items are stored in a single hash on redis with key name `cl-tracker.items` of the following format:
+
+```
+{
+  "item_id_1": item_1,
+  "item_id_2": item_2,
+  ...
+}
+```
+
+Each item is a JSON of the following format:
 
 ```
 {
