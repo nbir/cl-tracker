@@ -46,3 +46,10 @@ Jobs are queued on a job queue named `cl-tracker.worker`. All repeating jobs are
 ### Worker
 
 The worker consumes messages from the job queue, fetches posts, parses and extracts relevant fields, and saves to DB. The worker is also responsible for creating the AMQP exchange, queues and bindings.
+
+## API
+
+- `GET /items` - list all items
+- `POST /items` - create new item (expects data `url=<string>`)
+- `PUT /items/<item_id>` - update item (fetch post immediately)
+- `DELETE /items/<item_id>` - delete item
