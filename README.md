@@ -7,6 +7,7 @@ A Craigslist item/search tracker
 - `brew install redis` - install redis
 - `brew install rabbitmq` - install RabbitMQ
 - `brew install pipenv` - install python package/virtual environment manager
+- `nvm install 8` - install node using [nvm](https://github.com/creationix/nvm)
 
 ## Usage
 
@@ -14,6 +15,7 @@ A Craigslist item/search tracker
 - `redis-server` - start redis server
 - `pipenv run python worker.py` - run worker
 - `pipenv run python api.py` - run API
+- `npm run build` - build ui (`build/index.html`)
 
 ## Development
 
@@ -22,6 +24,8 @@ A Craigslist item/search tracker
 - `pipenv run <file-name>` - run a file in pipenv (or `pipenv shell` to activate a virtualenv)
 - `tail -f cl-tracker.worker.log` - tail worker logs
 - `tail -f cl-tracker.api.log` - tail API logs
+- `npm i` - install node modules
+- `npm run start` - start webpack dev server
 
 ## Components
 
