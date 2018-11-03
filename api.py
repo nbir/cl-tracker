@@ -5,6 +5,7 @@ import redis
 import uuid
 from datetime import datetime
 from flask import Flask
+from flask_cors import CORS
 from flask_restful import Resource, reqparse, Api
 
 REDIS_HOST = 'localhost'
@@ -101,11 +102,13 @@ if __name__ == '__main__':
     logging.basicConfig(filename='cl-tracker.api.log', level=logging.INFO)
 
     app = Flask(__name__)
-    api = Api(app)
+    app.url_map.strict_slashes = False
+    CORS(app)
 
     parser = reqparse.RequestParser()
     parser.add_argument('url')
 
+    api = Api(app)
     api.add_resource(ItemList, '/items')
     api.add_resource(Item, '/items/<string:item_id>')
 

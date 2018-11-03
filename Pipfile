@@ -9,6 +9,7 @@ redis = "*"
 pika = "*"
 flask = "*"
 flask-restful = "*"
+flask-cors = "*"
 
 [dev-packages]
 
